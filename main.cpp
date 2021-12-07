@@ -78,7 +78,6 @@ int** create_G3(int n)
 
 	/*for (int i = 0; i < n; i++)
 		cout << "V" << i << " ";
-
 	for (int i = 0; i < n; i++)
 	{
 		cout << "\n";
@@ -117,7 +116,6 @@ int** create_G4(int u)
 
 	/*for (int i = 0; i < n; i++)
 		cout << "V" << i << " ";
-
 	for (int i = 0; i < n; i++)
 	{
 		cout << "\n";
@@ -311,11 +309,11 @@ void list_ras(List** vrt, List** vrt2, int n){
 	int v1, v2;
 	int l, s = 0;
 	s = n + 1;
-	List **list3 = (List**)malloc(n * sizeof(List*));
+	List **list3 = (List**)malloc(s * sizeof(List*));
 	List *h, *e, *h1, *e1;
 	
 	
-	initialize(n, list3);
+	initialize(s, list3);
 	cout << "which vert to split: ";
 	cout << endl;
 	cin >> v1;
@@ -337,15 +335,46 @@ void list_ras(List** vrt, List** vrt2, int n){
 		}
 		list3[i] = h;
 	}
-	List **c = (List**)malloc(sizeof(List*));
-	List **a = (List**)malloc(sizeof(List*));
-	initialize(1, c);
-	//c[v1] = vrt[v1];
-	c[v1] = list3[v1];
-	a[v1] = c[v1];
-	
-	
+	List* temp, *temp1, *temp2;
+	temp = list3[v1];
+	temp1 = list3[n];
 
+	//c[v1] = vrt[v1];
+	if (temp != NULL)
+	{
+		temp1->Data = temp->Data;
+		temp = temp->next;
+		temp1->next = NULL;
+	}
+	while (temp)
+	{
+		temp1->next = (List*)malloc(sizeof(List));
+		temp1 = temp1->next;
+		temp1->Data = temp->Data;
+		temp1->next = NULL;
+		temp = temp->next;
+	}
+
+	//c[v1] = list3[v1];
+	//a[v1] = c[v1];
+	
+	while (list3[s]->next != NULL){
+		temp2 = temp2->next;
+		for (int j = 0; j < s; j++){
+			if (list3[s]->Data == j){
+				e->next = (List*)malloc(sizeof(List));
+				e = list3[s]->Data;
+				list3[s]->next = NULL;
+			}
+		}
+	}
+
+		for (int i = 0; i < s; i++){
+			
+			
+			 
+		}
+	
 	//List *temp, *temp1;
 	//temp = list3[v1];
 	//temp1 = list3[v2];
@@ -353,7 +382,7 @@ void list_ras(List** vrt, List** vrt2, int n){
 	/*for (int i = n; i < n + 1; i++){
 		list3[i + 1]->Data = c[v1]->Data;
 	}*/
-	print(list3, n);
+	print(list3, s);
 	cout << endl;
 }
 
