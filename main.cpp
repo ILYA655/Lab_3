@@ -129,7 +129,7 @@ int** create_G4(int u)
 
 typedef struct List {
 	int Data;
-	struct List* next;
+	List* next;
 }List;
 
 List* init(int num)
@@ -335,11 +335,14 @@ void list_ras(List** vrt, List** vrt2, int n){
 		}
 		list3[i] = h;
 	}
+	
 	List* temp, *temp1, *temp2;
 	temp = list3[v1];
 	temp1 = list3[n];
-
 	//c[v1] = vrt[v1];
+	temp1->next = (List*)malloc(sizeof(List));
+	temp1 = temp1->next;
+	temp1->next = NULL;
 	if (temp != NULL)
 	{
 		temp1->Data = temp->Data;
@@ -354,27 +357,47 @@ void list_ras(List** vrt, List** vrt2, int n){
 		temp1->next = NULL;
 		temp = temp->next;
 	}
-
+	print(list3, s);
 	//c[v1] = list3[v1];
 	//a[v1] = c[v1];
 	
-	while (list3[s]->next != NULL){
-		temp2 = temp2->next;
-		for (int j = 0; j < s; j++){
-			if (list3[s]->Data == j){
-				e->next = (List*)malloc(sizeof(List));
-				e = list3[s]->Data;
-				list3[s]->next = NULL;
+	//while (temp1){
+		//temp1 = temp1->next;
+		l = 0;
+		for (int j = 0; j < n; j++){
+			temp2 = list3[j];
+			while (temp2->next != NULL){
+				if (temp2->Data == v1){
+					l++;
+				}
+				temp2 = temp2->next;
+				
 			}
-		}
-	}
+			
+			if (l > 0){
+				temp2->next = new List;
+				temp2 = temp2->next;
+				temp2->Data = n;
+				temp2->next = NULL;
+			}
 
-		for (int i = 0; i < s; i++){
-			
-			
-			 
+			l = 0;
+			if (temp2 != NULL){
+				if (temp2->next == NULL){
+					if (temp2->Data == v1){
+						l++;
+					}
+					if (l > 0){
+						temp2->next = new List;
+						temp2 = temp2->next;
+						temp2->Data = n;
+						temp2->next = NULL;
+					}
+				}
+			}
+			l = 0;
 		}
-	
+	//}
 	//List *temp, *temp1;
 	//temp = list3[v1];
 	//temp1 = list3[v2];
@@ -1140,13 +1163,13 @@ int main()
 	List** vrt2 = (List**)malloc(s * sizeof(List*));
 	initialize(n, vrt2);
 	result(vrt2, t, n);
-	/*initialize(n1, vrt1);
+	initialize(n1, vrt1);
 	result(vrt1, t1, n1);
 	cout << endl;
 	cout << "second graph in list";
 	print(vrt1, n1);
 	cout << endl;
-	cout << "which graph to close: ";
+	/*cout << "which graph to close: ";
 	cin  >> w;
 	if (w == 1){
 		cout << endl;
