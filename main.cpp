@@ -1169,7 +1169,10 @@ int main()
 	cout << "second graph in list";
 	print(vrt1, n1);
 	cout << endl;
-	/*cout << "which graph to close: ";
+	/*for (int i = 0; i < n + 1; i++){
+		vrt[i] = 0;
+	}*/
+	cout << "which graph to close: ";
 	cin  >> w;
 	if (w == 1){
 		cout << endl;
@@ -1181,7 +1184,7 @@ int main()
 		list_zam(vrt1, n1);
 		cout << endl;
 	}
-	/*cout << endl;
+	cout << endl;
 	cout << "which graph to pull of: ";
 	cin  >> w;
 	if (w == 1){
@@ -1193,7 +1196,7 @@ int main()
 		cout << endl;
 		list_stg(vrt1, n1);
 		cout << endl;
-	}*/
+	}
 	cout << "which graph to split: ";
 	cin  >> w;
 	/*for (int i = 0; i < n + 1; i++){
@@ -1209,22 +1212,22 @@ int main()
 		list_ras(vrt1, vrt2, n1);
 		cout << endl;
 	}
-	//ob(t, t1, n, n1);
+	ob(t, t1, n, n1);
 	cout << endl;
 	cout << endl;
-	//per(t, t1, t2, n, n1);
-	cout << endl;
-
-	cout << endl;
-	//circleplus(t, t1, n, n1);
+	per(t, t1, t2, n, n1);
 	cout << endl;
 
 	cout << endl;
-	//zam(t, t1, n, n1);
+	circleplus(t, t1, n, n1);
 	cout << endl;
 
 	cout << endl;
-	//stg(t, t1, n, n1);
+	zam(t, t1, n, n1);
+	cout << endl;
+
+	cout << endl;
+	stg(t, t1, n, n1);
 	cout << endl;
 
 	if (n < n1)
@@ -1241,7 +1244,7 @@ int main()
 	cout << endl;
 
 	t4 = create_G4(u);
-	//decm(t, t1, t4, n, n1);
+	decm(t, t1, t4, n, n1);
 
 	for (int i = 0; i < n; i++)
 		free(t[i]);
