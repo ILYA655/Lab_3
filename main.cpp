@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <stack> // стек
+#pragma warning(disable : 4703);
 using namespace std;
 
 int** create(int n)
@@ -190,7 +191,7 @@ void print(List** vrt, int n)
 		{
 			if (vrt[i] != NULL)
 			{
-				cout << vrt[i]->Data<< " ";
+				cout << vrt[i]->Data << " ";
 				vrt[i] = vrt[i]->next;
 			}
 		}
@@ -199,144 +200,156 @@ void print(List** vrt, int n)
 	cout << "\n";
 }
 
-void list_zam(List** vrt, int n){
+void list_zam(List** vrt, int n) {
 	int v1, v2;
-	List **list1 = (List**)malloc(n * sizeof(List*));
-	List *h, *e;
+	List** list1 = (List**)malloc(n * sizeof(List*));
+	List* h, * e, *temp_vrt;
 	initialize(n, list1);
 	int l = 0;
 	cout << "which vert to close: ";
 	cout << endl;
 	cin >> v1 >> v2;
-	for (int i = 0; i < n; i++){
+	
+	for (int i = 0; i < n; i++) {
+		temp_vrt = vrt[i];
 		h = list1[i];
-		list1[i]->Data = vrt[i]->Data;
+		list1[i]->Data = temp_vrt->Data;
 		list1[i]->next = NULL;
-		vrt[i] = vrt[i]->next;
-		while(vrt[i] != NULL){
+		temp_vrt = temp_vrt->next;
+		while (temp_vrt != NULL) {
 			list1[i]->next = (List*)malloc(sizeof(List));
+			list1[i] = list1[i]->next;
+			list1[i]->Data = temp_vrt->Data;
 			list1[i]->next = NULL;
-			vrt[i] = vrt[i]->next;
+			temp_vrt = temp_vrt->next;
 		}
-		if (i == v1){
+		if (i == v1) {
 			e = list1[i];
 		}
-		list1[i] = h;	
+		list1[i] = h;
 	}
-	List *temp, *temp1;
+	List* temp, * temp1, * end;
 	temp = list1[v1];
 	temp1 = list1[v2];
-	while (temp1 != NULL){
-		while (temp != NULL){
-			if (temp1->Data == temp->Data){
+	end = list1[v1];
+	while (end != NULL && end->next != NULL) {
+		end = end->next;
+	}
+	while (temp1 != NULL) {
+		while (temp != NULL) {
+			if (temp1->Data == temp->Data) {
 				l++;
-
 			}
-			
+
 			temp = temp->next;
 		}
 		temp = list1[v1];
-		if (l == 0){
-			e->next = (List*)malloc(sizeof(List));
-			e = e->next;
-			e->Data = temp1->Data;
-			e->next = NULL;
+		if (l == 0) {
+			end->next = (List*)malloc(sizeof(List));
+			end = end->next;
+			end->Data = temp1->Data;
+			end->next = NULL;
 		}
 		temp1 = temp1->next;
 		l = 0;
 	}
-	for (int i = v2; i < n - 1; i++){
+	for (int i = v2; i < n - 1; i++) {
 		list1[i] = list1[i + 1];
 	}
-	print(list1, n - 1);
+	print(list1, n);
 }
 
-void list_stg(List** vrt, int n){
+void list_stg(List** vrt, int n) {
 	int v1, v2;
-	List **list2 = (List**)malloc(n * sizeof(List*));
-	List *h, *e;
+	List** list2 = (List**)malloc(n * sizeof(List*));
+	List* h, * e, *temp_vrt;
 	initialize(n, list2);
 	int l = 0;
 	cout << "which vert to pull of: ";
 	cout << endl;
 	cin >> v1 >> v2;
-	for (int i = 0; i < n; i++){
+	for (int i = 0; i < n; i++) {
+		temp_vrt = vrt[i];
 		h = list2[i];
-		list2[i]->Data = vrt[i]->Data;
+		list2[i]->Data = temp_vrt->Data;
 		list2[i]->next = NULL;
-		vrt[i] = vrt[i]->next;
-		while(vrt[i] != NULL){
+		temp_vrt = temp_vrt->next;
+		while (temp_vrt != NULL) {
 			list2[i]->next = (List*)malloc(sizeof(List));
 			list2[i] = list2[i]->next;
-			list2[i]->Data = vrt[i]->Data;
+			list2[i]->Data = temp_vrt->Data;
 			list2[i]->next = NULL;
-			vrt[i] = vrt[i]->next;
+			temp_vrt = temp_vrt->next;
 		}
-		if (i == v1){
+		if (i == v1) {
 			e = list2[i];
 		}
-		list2[i] = h;	
+		list2[i] = h;
 	}
-	List *temp, *temp1;
+	List* temp, * temp1, *end;
 	temp = list2[v1];
 	temp1 = list2[v2];
-	while (temp1 != NULL){
-		while (temp != NULL){
-			if (temp1->Data == temp->Data){
+	end = list2[v1];
+	while (end != NULL && end->next != NULL) {
+		end = end->next;
+	}
+	while (temp1 != NULL) {
+		while (temp != NULL) {
+			if (temp1->Data == temp->Data) {
 				l++;
-
 			}
-			
+
 			temp = temp->next;
 		}
 		temp = list2[v1];
-		if (l == 0){
-			e->next = (List*)malloc(sizeof(List));
-			e = e->next;
-			e->Data = temp1->Data;
-			e->next = NULL;
+		if (l == 0) {
+			end->next = (List*)malloc(sizeof(List));
+			end = end->next;
+			end->Data = temp1->Data;
+			end->next = NULL;
 		}
 		temp1 = temp1->next;
 		l = 0;
 	}
-	for (int i = v2; i < n - 1; i++){
+	for (int i = v2; i < n - 1; i++) {
 		list2[i] = list2[i + 1];
 	}
-	print(list2, n - 1);
+	print(list2, n);
 }
 
-void list_ras(List** vrt, List** vrt2, int n){
+void list_ras(List** vrt, List** vrt2, int n) {
 	int v1, v2;
 	int l, s = 0;
 	s = n + 1;
-	List **list3 = (List**)malloc(s * sizeof(List*));
-	List *h, *e, *h1, *e1;
-	
-	
+	List** list3 = (List**)malloc(s * sizeof(List*));
+	List* h, * e, * h1, * e1, *temp_vrt;
+
+
 	initialize(s, list3);
 	cout << "which vert to split: ";
 	cout << endl;
 	cin >> v1;
-	
-	for (int i = 0; i < n; i++){
+
+	for (int i = 0; i < n; i++) {
+		temp_vrt = vrt[i];
 		h = list3[i];
-		list3[i]->Data = vrt[i]->Data;
+		list3[i]->Data = temp_vrt->Data;
 		list3[i]->next = NULL;
-		vrt[i] = vrt[i]->next;
-		while(vrt[i] != NULL){
+		temp_vrt = temp_vrt->next;
+		while (temp_vrt != NULL) {
 			list3[i]->next = (List*)malloc(sizeof(List));
 			list3[i] = list3[i]->next;
-			list3[i]->Data = vrt[i]->Data;
+			list3[i]->Data = temp_vrt->Data;
 			list3[i]->next = NULL;
-			vrt[i] = vrt[i]->next;
+			temp_vrt = temp_vrt->next;
 		}
-		if (i == v1){
+		if (i == v1) {
 			e = list3[i];
 		}
 		list3[i] = h;
 	}
-	
-	List* temp, *temp1, *temp2;
+
+	List* temp, * temp1, * temp2;
 	temp = list3[v1];
 	temp1 = list3[n];
 	//c[v1] = vrt[v1];
@@ -357,51 +370,50 @@ void list_ras(List** vrt, List** vrt2, int n){
 		temp1->next = NULL;
 		temp = temp->next;
 	}
-	print(list3, s);
 	//c[v1] = list3[v1];
 	//a[v1] = c[v1];
-	
+
 	//while (temp1){
 		//temp1 = temp1->next;
+	l = 0;
+	for (int j = 0; j < n; j++) {
+		temp2 = list3[j];
+		while (temp2->next != NULL) {
+			if (temp2->Data == v1) {
+				l++;
+			}
+			temp2 = temp2->next;
+
+		}
+
+		if (l > 0) {
+			temp2->next = new List;
+			temp2 = temp2->next;
+			temp2->Data = n;
+			temp2->next = NULL;
+		}
+
 		l = 0;
-		for (int j = 0; j < n; j++){
-			temp2 = list3[j];
-			while (temp2->next != NULL){
-				if (temp2->Data == v1){
+		if (temp2 != NULL) {
+			if (temp2->next == NULL) {
+				if (temp2->Data == v1) {
 					l++;
 				}
-				temp2 = temp2->next;
-				
-			}
-			
-			if (l > 0){
-				temp2->next = new List;
-				temp2 = temp2->next;
-				temp2->Data = n;
-				temp2->next = NULL;
-			}
-
-			l = 0;
-			if (temp2 != NULL){
-				if (temp2->next == NULL){
-					if (temp2->Data == v1){
-						l++;
-					}
-					if (l > 0){
-						temp2->next = new List;
-						temp2 = temp2->next;
-						temp2->Data = n;
-						temp2->next = NULL;
-					}
+				if (l > 0) {
+					temp2->next = new List;
+					temp2 = temp2->next;
+					temp2->Data = n;
+					temp2->next = NULL;
 				}
 			}
-			l = 0;
 		}
+		l = 0;
+	}
 	//}
 	//List *temp, *temp1;
 	//temp = list3[v1];
 	//temp1 = list3[v2];
-	
+
 	/*for (int i = n; i < n + 1; i++){
 		list3[i + 1]->Data = c[v1]->Data;
 	}*/
@@ -411,8 +423,8 @@ void list_ras(List** vrt, List** vrt2, int n){
 
 void ob(int** G1, int** G2, int n, int n1)
 {
-	int **M1 = (int**)malloc(n * sizeof(int*));
-	int **M2 = (int**)malloc(n1 * sizeof(int*));
+	int** M1 = (int**)malloc(n * sizeof(int*));
+	int** M2 = (int**)malloc(n1 * sizeof(int*));
 	for (int i = 0; i < n; i++)
 	{
 		M1[i] = (int*)malloc(n * sizeof(int));
@@ -441,6 +453,7 @@ void ob(int** G1, int** G2, int n, int n1)
 				}
 			}
 		}
+		cout << "ob result: " << endl;
 		for (int i = 0; i < n1; i++)
 			cout << "V" << i << " ";
 		for (int i = 0; i < n1; i++)
@@ -462,6 +475,7 @@ void ob(int** G1, int** G2, int n, int n1)
 				}
 			}
 		}
+		cout << endl << "ob result: " << endl;
 		for (int i = 0; i < n; i++)
 			cout << "V" << i << " ";
 		for (int i = 0; i < n; i++)
@@ -475,8 +489,8 @@ void ob(int** G1, int** G2, int n, int n1)
 
 void per(int** G1, int** G2, int** G3, int n, int n1)
 {
-	int **M1 = (int**)malloc(n * sizeof(int*));
-	int **M2 = (int**)malloc(n1 * sizeof(int*));
+	int** M1 = (int**)malloc(n * sizeof(int*));
+	int** M2 = (int**)malloc(n1 * sizeof(int*));
 	for (int i = 0; i < n; i++)
 	{
 		M1[i] = (int*)malloc(n * sizeof(int));
@@ -505,6 +519,7 @@ void per(int** G1, int** G2, int** G3, int n, int n1)
 				}
 			}
 		}
+		cout << endl << "per result: " << endl;
 		for (int i = 0; i < n1; i++)
 			cout << "V" << i << " ";
 		for (int i = 0; i < n1; i++)
@@ -526,6 +541,7 @@ void per(int** G1, int** G2, int** G3, int n, int n1)
 				}
 			}
 		}
+		cout << endl << "per result: " << endl;
 		for (int i = 0; i < n; i++)
 			cout << "V" << i << " ";
 		for (int i = 0; i < n; i++)
@@ -540,8 +556,8 @@ void per(int** G1, int** G2, int** G3, int n, int n1)
 void circleplus(int** G1, int** G2, int n, int n1)
 {
 	int x = 0;
-	int **M1 = (int**)malloc(n * sizeof(int*));
-	int **M2 = (int**)malloc(n1 * sizeof(int*));
+	int** M1 = (int**)malloc(n * sizeof(int*));
+	int** M2 = (int**)malloc(n1 * sizeof(int*));
 	for (int i = 0; i < n; i++)
 	{
 		M1[i] = (int*)malloc(n * sizeof(int));
@@ -558,7 +574,7 @@ void circleplus(int** G1, int** G2, int n, int n1)
 			M2[i][j] = G2[i][j];
 		}
 	}
-////////////////////////////////
+	////////////////////////////////
 	if (n < n1)
 	{
 		for (int i = 0; i < n; i++)
@@ -575,14 +591,14 @@ void circleplus(int** G1, int** G2, int n, int n1)
 				}
 			}
 		}
-		for (int i = 0; i < n1; i++)
+		/*for (int i = 0; i < n1; i++)
 			cout << "V" << i << " ";
 		for (int i = 0; i < n1; i++)
 		{
 			cout << endl;
 			for (int j = 0; j < n1; j++)
 				cout << M2[i][j] << "  ";
-		}
+		}*/
 		/////////////////////////////////
 		for (int p = 0; p < n1; p++)
 		{
@@ -614,7 +630,9 @@ void circleplus(int** G1, int** G2, int n, int n1)
 			}
 			x = 0;
 		}
-		cout << endl;
+		cout << endl << "circleplus result: " << endl;
+		for (int i = 0; i < n1; i++)
+			cout << "V" << i << " ";
 		for (int i = 0; i < n1; i++)
 		{
 			cout << endl;
@@ -641,14 +659,14 @@ void circleplus(int** G1, int** G2, int n, int n1)
 				}
 			}
 		}
-		for (int i = 0; i < n; i++)
+		/*for (int i = 0; i < n; i++)
 			cout << "V" << i << " ";
 		for (int i = 0; i < n; i++)
 		{
 			cout << endl;
 			for (int j = 0; j < n; j++)
 				cout << M1[i][j] << "  ";
-		}
+		}*/
 		////////////////////////////////
 		for (int p = 0; p < n; p++)
 		{
@@ -680,7 +698,9 @@ void circleplus(int** G1, int** G2, int n, int n1)
 			}
 			x = 0;
 		}
-		cout << endl;
+		cout << endl << "circleplus result: " << endl;
+		for (int i = 0; i < n; i++)
+			cout << "V" << i << " ";
 		for (int i = 0; i < n; i++)
 		{
 			cout << endl;
@@ -694,9 +714,10 @@ void circleplus(int** G1, int** G2, int n, int n1)
 
 void zam(int** G1, int** G2, int n, int n1)
 {
-	int x, v1, v2, w = 0;
-	int **M1 = (int**)malloc(n * sizeof(int*));
-	int **M2 = (int**)malloc(n1 * sizeof(int*));
+	int x = 0;
+	int v1, v2, w = 0;
+	int** M1 = (int**)malloc(n * sizeof(int*));
+	int** M2 = (int**)malloc(n1 * sizeof(int*));
 	for (int i = 0; i < n; i++)
 	{
 		M1[i] = (int*)malloc(n * sizeof(int));
@@ -714,8 +735,8 @@ void zam(int** G1, int** G2, int n, int n1)
 		}
 	}
 	cout << "which graph to close: ";
-	cin  >> w;
-	if (w == 1){
+	cin >> w;
+	if (w == 1) {
 		cout << "which vert to close: ";
 		cout << endl;
 		cin >> v1 >> v2;
@@ -772,7 +793,7 @@ void zam(int** G1, int** G2, int n, int n1)
 			}
 		}
 	}
-	if (w == 2){
+	if (w == 2) {
 		cout << "which vert to close: ";
 		cout << endl;
 		cin >> v1 >> v2;
@@ -833,9 +854,10 @@ void zam(int** G1, int** G2, int n, int n1)
 
 void stg(int** G1, int** G2, int n, int n1)
 {
-	int x, v1, v2, w = 0;
-	int **M1 = (int**)malloc(n * sizeof(int*));
-	int **M2 = (int**)malloc(n1 * sizeof(int*));
+	int x = 0;
+	int v1, v2, w = 0;
+	int** M1 = (int**)malloc(n * sizeof(int*));
+	int** M2 = (int**)malloc(n1 * sizeof(int*));
 	for (int i = 0; i < n; i++)
 	{
 		M1[i] = (int*)malloc(n * sizeof(int));
@@ -853,13 +875,13 @@ void stg(int** G1, int** G2, int n, int n1)
 		}
 	}
 	cout << "which graph to pull of: ";
-	cin  >> w;
-	if (w == 1){
+	cin >> w;
+	if (w == 1) {
 		cout << "which vert to pull of: ";
 		cout << endl;
 		cin >> v1 >> v2;
 		if (M1[v1][v2] == M1[v2][v1] && M1[v1][v2] != 0)
-		{	
+		{
 			for (int j = 0; j < n; j++)
 			{
 				if (M1[v1][j] != M1[v2][j])
@@ -872,14 +894,14 @@ void stg(int** G1, int** G2, int n, int n1)
 			}
 			if (M1[v1][v1] == 1)
 				M1[v1][v1] = 0;
-		///////////////////////////////////////////
+			///////////////////////////////////////////
 			for (int p = 0; p < n; p++)
 			{
 				for (int k = 0; k < n; k++)
 				{
 					if (M1[p][k] == 1)
 					{
-							x++;
+						x++;
 					}
 				}
 				if (x == 0)
@@ -918,7 +940,7 @@ void stg(int** G1, int** G2, int n, int n1)
 			cout << "NO";
 		}
 	}
-	if (w == 2){
+	if (w == 2) {
 		cout << "which vert to close: ";
 		cout << endl;
 		cin >> v1 >> v2;
@@ -986,8 +1008,8 @@ void stg(int** G1, int** G2, int n, int n1)
 
 void ras(int** G1, int** G2, int** G3, int n, int n1)
 {
-	int **M1 = (int**)malloc(n * sizeof(int*));
-	int **M2 = (int**)malloc(n1 * sizeof(int*));
+	int** M1 = (int**)malloc(n * sizeof(int*));
+	int** M2 = (int**)malloc(n1 * sizeof(int*));
 	int v1, v2, w = 0;
 	for (int i = 0; i < n; i++)
 	{
@@ -1013,8 +1035,8 @@ void ras(int** G1, int** G2, int** G3, int n, int n1)
 		}
 	}
 	cout << "which graph to split: ";
-	cin  >> w;
-	if (w == 1){
+	cin >> w;
+	if (w == 1) {
 		cout << "which vert to split: ";
 		cout << endl;
 		cin >> v1;
@@ -1034,9 +1056,9 @@ void ras(int** G1, int** G2, int** G3, int n, int n1)
 		{
 			G3[n][i] = M1[i][v1];
 		}
-		
+
 	}
-	if (w == 2){
+	if (w == 2) {
 		cout << "which vert to split: ";
 		cout << endl;
 		cin >> v1;
@@ -1070,8 +1092,8 @@ void ras(int** G1, int** G2, int** G3, int n, int n1)
 
 void decm(int** G1, int** G2, int** G4, int n, int n1)
 {
-	int **M1 = (int**)malloc(n * sizeof(int*));
-	int **M2 = (int**)malloc(n1 * sizeof(int*));
+	int** M1 = (int**)malloc(n * sizeof(int*));
+	int** M2 = (int**)malloc(n1 * sizeof(int*));
 	int v1, v2, w, u, a = 0;
 	u = n * n1;
 	int b = -1;
@@ -1091,7 +1113,7 @@ void decm(int** G1, int** G2, int** G4, int n, int n1)
 			M2[i][j] = G2[i][j];
 		}
 	}
-	
+
 	for (int i = 0; i < n; i++)
 	{
 		for (int k = 0; k < n1; k++)
@@ -1107,16 +1129,17 @@ void decm(int** G1, int** G2, int** G4, int n, int n1)
 					else
 						if (i == j)
 							G4[b][a] = M2[k][p];
-					else
-						if (k == p)
-							G4[b][a] = M1[i][j];
-					else
-						G4[b][a] = 0; 
+						else
+							if (k == p)
+								G4[b][a] = M1[i][j];
+							else
+								G4[b][a] = 0;
 					a++;
 				}
 			}
 		}
 	}
+	cout << endl << "decm result:" << endl;
 	for (int i = 0; i < u; i++)
 		cout << "V" << i << " ";
 	for (int i = 0; i < u; i++)
@@ -1130,17 +1153,16 @@ void decm(int** G1, int** G2, int** G4, int n, int n1)
 int main()
 {
 	int n, n1, ** t, ** t1, ** t2, ** t3, ** t4, s, o, u, w;
-	
-	
+
 	cout << "Enter array 1 size: ";
 	cin >> n;
-	
+
 	t = create(n);
 	cout << endl;
 	cout << endl;
 	cout << "Enter array 2 size: ";
 	cin >> n1;
-	
+
 	u = n * n1;
 	t1 = create(n1);
 	if (n < n1)
@@ -1173,41 +1195,41 @@ int main()
 		vrt[i] = 0;
 	}*/
 	cout << "which graph to close: ";
-	cin  >> w;
-	if (w == 1){
+	cin >> w;
+	if (w == 1) {
 		cout << endl;
 		list_zam(vrt, n);
 		cout << endl;
 	}
-	if (w == 2){
+	if (w == 2) {
 		cout << endl;
 		list_zam(vrt1, n1);
 		cout << endl;
 	}
 	cout << endl;
 	cout << "which graph to pull of: ";
-	cin  >> w;
-	if (w == 1){
+	cin >> w;
+	if (w == 1) {
 		cout << endl;
 		list_stg(vrt, n);
 		cout << endl;
 	}
-	if (w == 2){
+	if (w == 2) {
 		cout << endl;
 		list_stg(vrt1, n1);
 		cout << endl;
 	}
 	cout << "which graph to split: ";
-	cin  >> w;
+	cin >> w;
 	/*for (int i = 0; i < n + 1; i++){
 		vrt[i] = 0;
 	}*/
-	if (w == 1){
+	if (w == 1) {
 		cout << endl;
 		list_ras(vrt, vrt2, n);
 		cout << endl;
 	}
-	if (w == 2){
+	if (w == 2) {
 		cout << endl;
 		list_ras(vrt1, vrt2, n1);
 		cout << endl;
@@ -1244,6 +1266,7 @@ int main()
 	cout << endl;
 
 	t4 = create_G4(u);
+	cout << endl;
 	decm(t, t1, t4, n, n1);
 
 	for (int i = 0; i < n; i++)
