@@ -201,7 +201,8 @@ void print(List** vrt, int n)
 }
 
 void list_zam(List** vrt, int n) {
-	int v1, v2;
+	int v1 = 0;
+	int v2 = 0;
 	List** list1 = (List**)malloc(n * sizeof(List*));
 	List* h, * e, *temp_vrt;
 	initialize(n, list1);
@@ -209,7 +210,10 @@ void list_zam(List** vrt, int n) {
 	cout << "which vert to close: ";
 	cout << endl;
 	cin >> v1 >> v2;
-	
+	while(v1 >= n || v2 >= n || v1 < 0 || v2 < 0){
+		cout << "NO" << endl;
+		cin >> v1 >> v2;
+	}
 	for (int i = 0; i < n; i++) {
 		temp_vrt = vrt[i];
 		h = list1[i];
@@ -260,7 +264,8 @@ void list_zam(List** vrt, int n) {
 }
 
 void list_stg(List** vrt, int n) {
-	int v1, v2;
+	int v1 = 0;
+	int v2 = 0;
 	List** list2 = (List**)malloc(n * sizeof(List*));
 	List* h, * e, *temp_vrt;
 	initialize(n, list2);
@@ -268,6 +273,10 @@ void list_stg(List** vrt, int n) {
 	cout << "which vert to pull of: ";
 	cout << endl;
 	cin >> v1 >> v2;
+	while(v1 >= n || v2 >= n || v1 < 0 || v2 < 0){
+		cout << "NO" << endl;
+		cin >> v1 >> v2;
+	}
 	for (int i = 0; i < n; i++) {
 		temp_vrt = vrt[i];
 		h = list2[i];
@@ -329,6 +338,10 @@ void list_ras(List** vrt, List** vrt2, int n) {
 	cout << "which vert to split: ";
 	cout << endl;
 	cin >> v1;
+	while(v1 >= n || v1 < 0){
+		cout << "NO" << endl;
+		cin >> v1;
+	}
 
 	for (int i = 0; i < n; i++) {
 		temp_vrt = vrt[i];
@@ -1278,6 +1291,6 @@ int main()
 	for (int i = 0; i < n; i++)
 		free(t2[i]);
 	free(t2);
-	//system("pause");
+	system("pause");
 	return 0;
 }
